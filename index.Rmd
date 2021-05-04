@@ -1,12 +1,13 @@
 ---
 title: "Modelos Lineales Generalizados"
-subtitle: "⚔ Inferencia Causal y Experimentos Aleatorios ⚔<br/>"
+subtitle: "⚔ Inferencia causal y experimentos aleatorios. ⚔<br/>"
 author: 
   - Iván Oswaldo Salgado Velázquez
   - Aide Jazmín González Cruz
   - Ana Eréndira Torres Ramírez
   - Victor Erasto
   - Oscar Arturo Bringas López
+institute: "ITAM"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -25,6 +26,7 @@ class: center, middle
 
 library(xaringanExtra)
 
+
 xaringanExtra::use_logo(
   image_url = "http://escolar.itam.mx/centro_tesis/img/logo-ITAM.png",
   position = xaringanExtra::css_position(top = "1em", right = "1em")
@@ -42,9 +44,9 @@ xaringanExtra::style_panelset_tabs(
 
 # Objetivo
 
-El objetivo de este capítulo es conocer las principales definiciones y problemáticas asociados a los diseños de experimentos que pretenden inferir el efecto asociado a un tratamiento o exposición aplicado a un individuo. 
+</br>
 
-A lo largo del capítulo se analizan diferentes problemas junto con sus respectivas hipótesis y propuestas de solución.
+El objetivo de este capítulo es conocer las principales definiciones y problemáticas asociados a los diseños de experimentos que pretenden inferir el efecto asociado a un tratamiento o exposición aplicado a un individuo. 
 
 ---
 class: inverse, center, middle
@@ -59,9 +61,13 @@ class: inverse, center, middle
 
 <div style="text-align: justify">
 
-Los efectos causales se conceptualizan como una comparación entre los diferentes resultados potenciales y los resultados que podría haber sucedido en otros escenarios. (Estado fáctico / Estados contrafácticos)
+Los efectos causales son una comparación entre los resultados potenciales y los resultados que podría haber sucedido en otros escenarios.
 
-**Ejemplo:** Tomemos el efecto en el consumo de ácidos grasos omega-3, como una estrategía eficaz para abordar una afeción médica como es la presión arterial sistólica (presión máxima que ejerce el corazón mientras late), en este caso se considera ***presión arterial alta*** niveles de $160mmHG$ o superiores.
+</br>
+
+**Ejemplo:** Medir el efecto en el consumo de ácidos grasos omega-3, como estrategía en la reducción de presión arterial sistólica (presión máxima que ejerce el corazón mientras late).
+
+</br>
 
 ```{r, fig.align='center', out.height='220', out.width='450', echo=F}
 knitr::include_graphics("img/8_individuos.png")
@@ -104,9 +110,6 @@ Por tanto el efecto causal puede expresarse como: La diferencia de lo que hubier
 
 ---
 <div style="text-align: justify">
-</br>
-</br>
-Supongamos que un individuo $j^{th}$ antes del tratamiento tiene una presión de $140mmHg$, recibe suplementos, y al termino su medición fue de $y_{j}^1 = 135mmHg$. ¿Este descenso proporciona evidencia suficiente de que los suplementos causan una reducción en la presión arterial? 
 
 ## El problema fundamental de la inferencia causal
 
@@ -114,11 +117,11 @@ El problema inherente de la inferencia causal es que nunca podemos observar los 
 
 ## Sustitutos próximos
 
-¿Qué pasaría si tuviéramos la presión arterial de individuo antes del estudio? ¿Podríamos usar eso como un sustituto de su $y_{j}^0?$ 
+- ¿Qué pasaría si tuviéramos la presión arterial de individuo antes del estudio? 
 
-Comenzamos a plantear escenarios:
+- ¿Podríamos usar eso como un sustituto de su $y_{j}^0?$ 
 
-- ¿Nos puede ayudar la idea básica detrás de un diseño de estudio antes vs después?
+- ¿Una solución es podría se el aplicar un diseño de estudio antes $vs$ después?
 
 ???
 Supongamos que un individuo $j^{th}$ antes del tratamiento tiene una presión de $140mmHg$, recibe suplementos, y al termino su medición fue de $y_{j}^1 = 135mmHg$. Esto nos lleva a preguntarnos si ¿Este descenso proporciona evidencia suficiente de que los suplementos causan una reducción en la presión arterial? 
@@ -167,12 +170,15 @@ de cada individuo.
 $$\tau_i = y^1_i − y^0_i$$
 **Por ejemplo:**
 
-.pull-left[
 ```{r, fig.align='center', out.height='150', out.width='500', echo=F}
 knitr::include_graphics("img/ejemplo.png")
 ```
-]
-.pull-right[
+
+???
+
+Consideremos de nuevo nuestra hipótesis de 8 personas en el estudio. Supongan que en la figura mostrada pudieron haberse visto si fuéramos capaces de aplicar tanto el tratamiento como el control a cada persona. 
+
+Bajo este estado de omnisciencia, podríamos ver tanto $y^1$ y $y^0$ para cada participante en el estudio. Dados todos estos posibles resultados, podemos directamente calcular el efecto del tratamiento para cada persona:
 
 Existen diferencias entre los grupos de tratamiento y de control por lo que se 
 deben de realizar ciertos ajustes para estimar el efecto causal. 
@@ -180,13 +186,6 @@ deben de realizar ciertos ajustes para estimar el efecto causal.
 El efecto causal $\tau_i$ puede variar de persona en persona; es por eso que el
 cálculo de éste dependerá de en qué grupo de personas se está promediando este
 efecto.
-]
-
-???
-
-Consideremos de nuevo nuestra hipótesis de 8 personas en el estudio. Suponga que la figura 18.2 fue mostrada por los datos que pudieron haberse visto si fuéramos capaces de aplicar tanto el tratamiento como el control a cada persona. 
-
-Bajo este estado de omnisciencia, podríamos ver tanto $y^1$ y $y^0$ para cada participante en el estudio. Dados todos estos posibles resultados, podemos directamente calcular el efecto del tratamiento para cada persona:
 
 ---
 
@@ -230,7 +229,7 @@ knitr::include_graphics("img/groups.jpeg")
 
 El efecto de tratamiento promedio de tratamiento popular es a menudo una meta en la inferencia causal. Para una población de tamaño N, podemos definir el *PATE* como:
 
-$$\tau_{PATE} = \frac{1}{N} \sum_{i=1}^n(y_i^1 - y_i^0)$$
+$$\tau_{PATE} = \frac{1}{N} \sum_{i=1}^N(y_i^1 - y_i^0)$$
 En este problema de inferencia, hay dos tipos de datos faltantes:
 
 1. Los valores contractuales faltantes dentro de nuestra muestra
@@ -247,24 +246,10 @@ Mientras mejor esté hecha la muestra para hacer inferencias causales, esta se v
 
 Para conocer el PATE, nuestra omnisciencia necesitaría extenderse para ver ambos resultados potenciales de la completa población de interés
 
----
-
-#### Population Average Treatment Effect
-
-<div style="text-align: justify">
-
 Si la muestra de estudio es aleatoria entonces cualquier estimador insesgado de 
 **SATE** será estimador insesgado de **PATE**. Más aún, cuando se ajustan modelos 
 de regresión, el estimador **PATE** dependerá de la distribución asumida de los 
 predictores en la población de interés.
-
-Por ejemplo, si el efecto del tratamiento estimado es mayor para las mujeres que 
-para los hombres entonces el estimador **PATE** dependerá de la proporción de 
-hombres y mujeres de la población de interés. 
-
-Si la muestra no es aleatoria, estimar **PATE** requiere un modelo del efecto del 
-tratamiento dados los predictores previos al tratamiento que nos permitan extrapolar
-de unidades experimentales a la población general. 
 
 ---
 
@@ -322,7 +307,7 @@ class: inverse, center, middle
 
 <div style="text-align: justify">
 
-La asignación aleatoria de unidades a los grupos de tratamiento y control asegura que no haya diferencias en la esperanza en la distribución de los resultados potenciales entre los grupos. Es posible asignar aleatoriamente unidades a los tratamientos (o tratamientos a las unidades) lanzando una moneda, sacando nombres de un sombrero o, de manera más general, asignando números aleatorios a las unidades. Hoy en día nos apoyamos de software para estas asignaciones aleatoria. 
+La asignación aleatoria de unidades a los grupos de tratamiento y control asegura que no haya diferencias en la esperanza en la distribución de los resultados potenciales entre los grupos. Es posible asignar aleatoriamente unidades a los tratamientos (o tratamientos a las unidades).
 
 Ejemplo:
 
@@ -330,55 +315,93 @@ Ejemplo:
 sample(c(0,0,0,0,1,1,1,1), 8)
 ```
 
+???
+
+Asignamos aleaotriamente unidades a los grupos de tratamiento y de control para asegurar que no haya diferencia en la esperanza en la distribución de los resultados potenciales
+
+Lanzando una moneda, sacando nombres de un sombrero o, de manera más general, asignando números aleatorios a las unidades. Hoy en día nos apoyamos de software para estas asignaciones aleatoria. 
 ---
 
-## Experimentos completamente aleatorizados 
+</br>
+
+</br>
+
+**Experimentos completamente aleatorizados**
 
 <div style="text-align: justify">
 
 En un experimento completamente aleatorizado, la probabilidad de ser asignado al tratamiento es la misma para cada unidad de la muestra.
 
+</br>
 
 **Resultado idealizado de un experimento completamente aleatorizado.**
 
-En la tabla anterior la asignación de tratamiento y el resultado observado reflejan una asignación aleatoria idealizada. Caracterizamos la asignación aleatoria como idealizada porque parece haber conducido a distribuciones perfectamente equilibradas de resultados potenciales. En este caso, dado el equilibrio perfecto entre los grupos, tiene sentido que una simple diferencia en medias recupere exactamente el verdadero efecto del tratamiento de −7,5. De manera equivalente, el efecto causal promedio del tratamiento corresponde al coeficiente $\tau$ en la regresión, $y_i = \alpha + \tau z_i + error_i$, por lo que podemos estimar el efecto del tratamiento usando una regresión del resultado en la asignación del tratamiento.
+Caracterizamos la asignación aleatoria como idealizada porque parece haber conducido a distribuciones perfectamente equilibradas de resultados potenciales. 
+
+El efecto causal promedio del tratamiento corresponde al coeficiente $\tau$ en la regresión, $y_i = \alpha + \tau z_i + error_i$, por lo que podemos estimar el efecto del tratamiento usando una regresión del resultado en la asignación del tratamiento.
+
+???
+
+En un experimento completamente aleatorizado, la probabilidad de ser asignado al tratamiento es la misma para cada unidad de la muestra.
+
+Ahora un Resultado idealizado de un experimento completamente aleatorizado.
+
+En el ejemplo anterior la asignación de tratamiento y el resultado observado reflejan una asignación aleatoria idealizada, esta se caracteriza por haber conducido a distribuciones perfectamente equilibradas de resultados potenciales.
+
+En este caso, dado el equilibrio entre los grupos, tiene sentido que la diferencia de medias recupere el verdadero efecto del tratamiento de -7.5.
+
+Segundo párrafo.
 
 ---
 
-**Un resultado menos idealizado y aleatorizado.**
+**Un resultado aleatorizado no ideal.**
 
 <div style="text-align: justify">
 
-Consideremos la siguiente tabla. En este caso, la asignación aleatoria condujo a un desequilibrio entre los grupos de tratamiento y control, con los participantes más jóvenes con más probabilidades de haber recibido tratamiento. Si observamos las $y_i^0$'s notamos que incluso si el tratamiento no tuviera ningún efecto, veríamos una gran diferencia entre los grupos de tratamiento y control en el resultado. Para esta asignación de tratamiento en particular, la diferencia simple entre el tratamiento promedio y las mediciones de control llega a $-17.5$, que esta bastante alejado del efecto de tratamiento promedio de la muestra real de $−7,5$. La aleatorización garantiza el equilibrio en promedio, pero no en una muestra cualquiera, y el desequilibrio puede ser grande cuando el tamaño de la muestra es pequeño.
+Si observamos las $y_i^0$'s notamos que incluso si el tratamiento no tuviera ningún efecto, veríamos una gran diferencia entre los grupos de tratamiento y control en el resultado.
+
+En promedio, la aleatorización garantiza el equilibrio pero no en una muestra cualquiera mientras que el desequilibrio puede ser grande cuando el tamaño de la muestra es pequeño.
+
 
 
 ```{r, fig.align='center', out.height='250', out.width='800', echo=F}
 knitr::include_graphics("img/experimentos_aleatorios.jpeg")
 ```
 
+???
+
+Ahora veamos un resultado aleatorizado no ideal.
+
+En la siguiente tabla observamos que la asignación aleatoria condujo a un desequilibrio entre los grupos, con los participantes mas jóvenes con mayor probabilidad de recibir el tratamiento.
+
+Observando las yis 0, notamos que incluso si el tratamiento no tuviera ningún efecto, observaríamos una gran diferencia entre los grupos, una diferencia de -17.5 milímetros de mercurio, que esta bastante alejado del efecto promedio del tratamiento real de -7.5 
+
+En promedio, la aleatorización garantiza el equilibrio pero no en una muestra cualquiera mientras que el desequilibrio puede ser grande cuando el tamaño de la muestra es pequeño.
+
 ---
 class: inverse, center, middle
 
 # Capítulo 18.4
-
-## Distribuciones muestrales, distribuciones aleatorizadas, y sesgo en la estimación
-
+### Distribuciones muestrales, distribuciones aleatorizadas, y sesgo en la estimación
 ---
 
 * Realizamos un número infinito de muestras de la población, asignamos aleatoriamente el tratamiento y calculamos su estimación.
-
 * Si una estimación es insesgada entonces el promedio de todas las estimaciones es igual al efecto promedio del tratamiento en la muestra.
-
 * Una estimación insesgada no garantiza que la estimación para una muestra aleatoria sea cercana al valor real, sobretodo cuando la muestra es pequeña.
 
-```{r, fig.align='center', out.height='350', out.width='800', echo=F}
-knitr::include_graphics("img/Eficiente e insesgado.jpeg")
+.pull-left[
+```{r, fig.align='center', out.height='350', out.width='500', echo=F}
+knitr::include_graphics("img/Eficiente e insesgado1.jpeg")
 ```
-
+]
+.pull-right[
+```{r, fig.align='center', out.height='300', out.width='400', echo=F}
+knitr::include_graphics("img/Dist_sate.png")
+```
+]
 ---
 
 * Se puede mejorar la estimación del tratamiento mediante diseños muestrales que disminuyan muestras no balanceadas.
-
 * El aspecto más importante en el diseño es **recolectar información pre tratamiento** que pueda se usada para realizar muestras balanceada.
 
 ```{r, fig.align='center', out.height='350', out.width='800', echo=F}
